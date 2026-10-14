@@ -86,6 +86,8 @@ finder/
   scoring.py         scoring + market flag
   output.py          CSV + terminal summary
 tests/               unit tests (stdlib unittest)
+landing.html         sample product landing page (Slovenian)
+docs/screenshots/    landing page screenshots used below
 ```
 
 ## Tests
@@ -93,6 +95,25 @@ tests/               unit tests (stdlib unittest)
 ```bash
 python -m unittest discover tests
 ```
+
+## Landing page
+
+`landing.html` is a sample landing page for a made-up product, the **Perfect Fit** men's t-shirt, written in Slovenian. It's a single self-contained file built mobile-first, with all CSS inline. It has a problem headline, product images (placeholders), benefits, customer reviews, a 30-day risk-free guarantee, an FAQ and 1× / 3× / 6× bundle options. To view it, open it in any browser.
+
+![Landing page hero](docs/screenshots/landing-hero.png)
+
+<table>
+  <tr>
+    <th>Desktop (1280px)</th>
+    <th>Mobile (390px)</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/screenshots/landing-desktop.png" alt="Full landing page on desktop" width="520"></td>
+    <td valign="top"><img src="docs/screenshots/landing-mobile.png" alt="Full landing page on mobile" width="240"></td>
+  </tr>
+</table>
+
+The product images, reviews, rating count and support email are placeholders.
 
 ## Live mode (coming next)
 
