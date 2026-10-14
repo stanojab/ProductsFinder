@@ -8,6 +8,31 @@ It collects active ads from the Meta Ad Library, groups them into products, scor
 
 > **Status:** `--demo` mode works end to end on realistic sample data. Live Meta Ad Library fetching is stubbed out (`finder/meta_api.py`) until API access is available.
 
+## Landing page
+
+`landing.html` is a sample landing page for a made-up product, the **Perfect Fit** men's t-shirt, written in Slovenian. It's a single self-contained file built mobile-first, with all CSS inline. It has a problem headline, product images (placeholders), benefits, customer reviews, a 30-day risk-free guarantee, an FAQ and 1× / 3× / 6× bundle options. To view it, open it in any browser.
+
+![Landing page hero](docs/screenshots/landing-hero.png)
+
+<details>
+<summary><b>Show full page screenshots (desktop and mobile)</b></summary>
+<br>
+
+<table>
+  <tr>
+    <th>Desktop (1280px)</th>
+    <th>Mobile (390px)</th>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/screenshots/landing-desktop.png" alt="Full landing page on desktop" width="520"></td>
+    <td valign="top"><img src="docs/screenshots/landing-mobile.png" alt="Full landing page on mobile" width="240"></td>
+  </tr>
+</table>
+
+</details>
+
+The product images, reviews, rating count and support email are placeholders.
+
 ## Quick start
 
 Requires Python 3.10+. Demo mode uses only the standard library, so no install step is needed.
@@ -87,7 +112,7 @@ finder/
   output.py          CSV + terminal summary
 tests/               unit tests (stdlib unittest)
 landing.html         sample product landing page (Slovenian)
-docs/screenshots/    landing page screenshots used below
+docs/screenshots/    landing page screenshots shown above
 ```
 
 ## Tests
@@ -95,25 +120,6 @@ docs/screenshots/    landing page screenshots used below
 ```bash
 python -m unittest discover tests
 ```
-
-## Landing page
-
-`landing.html` is a sample landing page for a made-up product, the **Perfect Fit** men's t-shirt, written in Slovenian. It's a single self-contained file built mobile-first, with all CSS inline. It has a problem headline, product images (placeholders), benefits, customer reviews, a 30-day risk-free guarantee, an FAQ and 1× / 3× / 6× bundle options. To view it, open it in any browser.
-
-![Landing page hero](docs/screenshots/landing-hero.png)
-
-<table>
-  <tr>
-    <th>Desktop (1280px)</th>
-    <th>Mobile (390px)</th>
-  </tr>
-  <tr>
-    <td valign="top"><img src="docs/screenshots/landing-desktop.png" alt="Full landing page on desktop" width="520"></td>
-    <td valign="top"><img src="docs/screenshots/landing-mobile.png" alt="Full landing page on mobile" width="240"></td>
-  </tr>
-</table>
-
-The product images, reviews, rating count and support email are placeholders.
 
 ## Live mode (coming next)
 
