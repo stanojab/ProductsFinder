@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perfect Fit majica – majica, ki ostane v obliki</title>
+<meta name="description" content="Moška majica, ki se ne skrči, ne raztegne in ne leze iz hlač. 30 dni brez tveganja.">
+<style>
+  :root {
+    --ink: #16181d;
+    --muted: #5d636e;
+    --line: #e4e2dd;
+    --bg: #faf9f6;
+    --card: #ffffff;
+    --soft: #f1efe9;
+    --accent: #1d3557;
+    --accent-ink: #ffffff;
+    --good: #2f7d4f;
+    --star: #e8a33a;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+    padding-bottom: 76px; /* room for the sticky mobile bar */
+  }
+  img, svg { display: block; }
+  a { color: inherit; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 48px 0; }
+  h1, h2, h3 { line-height: 1.2; letter-spacing: -0.01em; }
+  h2 { font-size: 1.6rem; margin-bottom: 8px; text-align: center; }
+  .section-lead { color: var(--muted); text-align: center; max-width: 520px; margin: 0 auto 28px; }
+  .eyebrow { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+
+  /* Buttons */
+  .btn {
+    display: block; width: 100%; text-align: center; text-decoration: none;
+    background: var(--accent); color: var(--accent-ink);
+    font-weight: 700; font-size: 1.05rem; padding: 16px 20px;
+    border: 0; border-radius: 999px; cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(29,53,87,.25); }
+  .btn:focus-visible, input:focus-visible + label, summary:focus-visible { outline: 3px solid var(--star); outline-offset: 2px; }
+
+  /* Top bar + header */
+  .topbar { background: var(--ink); color: #fff; font-size: 0.8rem; text-align: center; padding: 8px 16px; }
+  header { border-bottom: 1px solid var(--line); background: var(--card); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .logo { font-weight: 800; letter-spacing: 0.18em; font-size: 1.15rem; text-decoration: none; }
+  .header-link { font-size: 0.9rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+
+  /* Hero */
+  .hero { padding-top: 24px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .hero h1 { font-size: 1.9rem; margin: 8px 0 12px; }
+  .hero p.sub { color: var(--muted); font-size: 1.05rem; margin-bottom: 16px; }
+  .rating { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; margin-bottom: 20px; }
+  .stars { color: var(--star); letter-spacing: 2px; }
+  .hero-points { list-style: none; margin: 20px 0 0; display: grid; gap: 8px; font-size: 0.92rem; color: var(--muted); }
+  .hero-points li::before { content: "✓"; color: var(--good); font-weight: 800; margin-right: 8px; }
+
+  /* Gallery: swipe on mobile, grid on desktop */
+  .gallery {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 86%;
+    gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+    margin: 0 -16px; padding: 0 16px 8px; scrollbar-width: none;
+  }
+  .gallery::-webkit-scrollbar { display: none; }
+  .ph {
+    scroll-snap-align: center; aspect-ratio: 4 / 5; border-radius: var(--radius);
+    background: linear-gradient(160deg, var(--soft), #e2ded5);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    color: var(--muted); font-size: 0.85rem; font-weight: 600; position: relative;
+  }
+  .ph svg { width: 46%; height: auto; }
+  .ph .tag { position: absolute; top: 12px; left: 12px; background: var(--card); padding: 4px 10px; border-radius: 999px; font-size: 0.75rem; }
+  .swipe-hint { text-align: center; font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+
+  /* Benefits */
+  .benefits { display: grid; gap: 12px; }
+  .benefit { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; display: flex; gap: 14px; }
+  .benefit .icon { flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--soft); display: grid; place-items: center; color: var(--accent); }
+  .benefit h3 { font-size: 1.02rem; margin-bottom: 4px; }
+  .benefit p { color: var(--muted); font-size: 0.93rem; }
+
+  /* Reviews */
+  .reviews-bg { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .score { text-align: center; margin-bottom: 28px; }
+  .score .big { font-size: 2.6rem; font-weight: 800; line-height: 1; }
+  .score .stars { font-size: 1.3rem; margin: 6px 0; }
+  .score small { color: var(--muted); }
+  .reviews { display: grid; gap: 12px; }
+  .review { background: var(--bg); border-radius: var(--radius); padding: 20px; }
+  .review .head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .review .who { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.95rem; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; display: grid; place-items: center; font-size: 0.85rem; }
+  .review .city { font-weight: 400; color: var(--muted); font-size: 0.82rem; display: block; }
+  .verified { font-size: 0.75rem; color: var(--good); font-weight: 600; }
+  .review p { font-size: 0.95rem; }
+
+  /* Guarantee */
+  .guarantee { background: var(--accent); color: #fff; border-radius: 20px; padding: 32px 24px; text-align: center; }
+  .seal {
+    width: 112px; height: 112px; margin: 0 auto 18px; border-radius: 50%;
+    border: 3px dashed rgba(255,255,255,.6); display: grid; place-items: center; text-align: center;
+  }
+  .seal strong { display: block; font-size: 2.2rem; line-height: 1; }
+  .seal span { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .guarantee h2 { color: #fff; }
+  .guarantee p { opacity: .88; max-width: 520px; margin: 0 auto; }
+  .guarantee ul { list-style: none; display: grid; gap: 8px; margin: 20px auto 0; max-width: 340px; text-align: left; font-size: 0.95rem; }
+  .guarantee li::before { content: "✓"; font-weight: 800; margin-right: 10px; }
+
+  /* FAQ */
+  .faq { max-width: 720px; margin: 0 auto; }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 10px; }
+  summary { list-style: none; cursor: pointer; padding: 16px 48px 16px 18px; font-weight: 600; position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 1.4rem; color: var(--accent); }
+  details[open] summary::after { content: "–"; }
+  details p { padding: 0 18px 18px; color: var(--muted); font-size: 0.95rem; }
+
+  /* Bundles */
+  .buy { background: var(--card); border-top: 1px solid var(--line); }
+  .buy-box { max-width: 560px; margin: 0 auto; }
+  .opt-label { font-weight: 700; font-size: 0.9rem; margin: 20px 0 10px; }
+  .opt-label span { font-weight: 400; color: var(--muted); }
+  .visually-hidden { position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px; }
+
+  .swatches, .sizes { display: flex; flex-wrap: wrap; gap: 10px; }
+  .swatch { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; box-shadow: inset 0 0 0 3px var(--card); }
+  input:checked + .swatch { border-color: var(--ink); }
+  .size { min-width: 52px; padding: 10px 12px; text-align: center; border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.92rem; }
+  input:checked + .size { border-color: var(--ink); background: var(--ink); color: #fff; }
+
+  .bundles { display: grid; gap: 18px; }
+  .bundle {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+    border: 2px solid var(--line); border-radius: var(--radius); padding: 16px; cursor: pointer;
+    position: relative; background: var(--card); transition: border-color .15s ease, background .15s ease;
+  }
+  input:checked + .bundle { border-color: var(--accent); background: #f3f6fa; }
+  .radio { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; }
+  input:checked + .bundle .radio { border-color: var(--accent); }
+  input:checked + .bundle .radio::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+  .bundle .qty { font-weight: 800; font-size: 1.1rem; }
+  .bundle .qty small { display: block; font-weight: 500; font-size: 0.82rem; color: var(--muted); }
+  .bundle .price { text-align: right; font-weight: 800; font-size: 1.15rem; }
+  .bundle .price s { display: block; font-weight: 400; font-size: 0.82rem; color: var(--muted); }
+  .bundle .save { display: inline-block; margin-top: 4px; font-size: 0.75rem; font-weight: 700; color: var(--good); }
+  .badge {
+    position: absolute; top: -11px; right: 16px; background: var(--star); color: var(--ink);
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
+    padding: 3px 10px; border-radius: 999px;
+  }
+  .badge.dark { background: var(--ink); color: #fff; }
+
+  .checkout { margin-top: 24px; }
+  .checkout-note { text-align: center; font-size: 0.85rem; color: var(--good); font-weight: 600; margin-top: 10px; min-height: 1.3em; }
+  .trust { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 18px; margin-top: 18px; font-size: 0.82rem; color: var(--muted); }
+  .trust span::before { content: "✓ "; color: var(--good); font-weight: 800; }
+
+  footer { text-align: center; font-size: 0.8rem; color: var(--muted); padding: 32px 16px; }
+
+  /* Sticky mobile CTA */
+  .sticky {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 10;
+    background: var(--card); border-top: 1px solid var(--line);
+    padding: 10px 16px; display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+  }
+  .sticky .info { flex: 1; font-size: 0.82rem; line-height: 1.3; }
+  .sticky .info strong { display: block; font-size: 0.95rem; }
+  .sticky .btn { width: auto; padding: 12px 22px; font-size: 0.95rem; }
+
+  /* Larger screens */
+  @media (min-width: 768px) {
+    body { padding-bottom: 0; }
+    .sticky { display: none; }
+    section { padding: 72px 0; }
+    h2 { font-size: 2rem; }
+    .hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: 48px; }
+    .hero h1 { font-size: 2.6rem; }
+    .gallery { grid-auto-flow: row; grid-template-columns: 1fr 1fr; overflow: visible; margin: 0; padding: 0; }
+    .gallery .ph:first-child { grid-column: span 2; aspect-ratio: 16 / 11; }
+    .swipe-hint { display: none; }
+    .benefits { grid-template-columns: repeat(3, 1fr); }
+    .benefit { flex-direction: column; }
+    .reviews { grid-template-columns: repeat(3, 1fr); }
+    .guarantee { padding: 56px 48px; }
+    .btn.hero-btn { width: auto; display: inline-block; padding: 16px 36px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">Brezplačna dostava ob nakupu 3 ali več majic · 30 dni brez tveganja</div>
+
+<header>
+  <div class="wrap">
+    <a href="#" class="logo">PERFECT FIT</a>
+    <a href="#paketi" class="header-link">Kupi zdaj</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. Problem headline + 2. Product images -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Moška majica Perfect Fit</span>
+        <h1>Majice, ki po treh pranjih izgubijo obliko? Dovolj je bilo.</h1>
+        <p class="sub">Skrčene, raztegnjen ovratnik, lezejo iz hlač. Perfect Fit majica ostane takšna kot prvi dan, tudi po 50 pranjih.</p>
+        <div class="rating">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span><strong>4,8/5</strong> · 2.347 ocen zadovoljnih kupcev</span>
+        </div>
+        <a href="#paketi" class="btn hero-btn">Izberi svoj paket</a>
+        <ul class="hero-points">
+          <li>Ne skrči se in ne izgubi oblike</li>
+          <li>Kroj, ki poudari moško postavo</li>
+          <li>30 dni za vračilo, brez vprašanj</li>
+        </ul>
+      </div>
+
+      <div>
+        <!-- Placeholder images: replace each .ph with an <img> -->
+        <div class="gallery" aria-label="Slike izdelka">
+          <div class="ph"><span class="tag">Spredaj</span>
+            <svg viewBox="0 0 100 100" fill="#c9c3b6" aria-hidden="true"><path d="M33 12 L42 8 Q50 16 58 8 L67 12 L90 27 L81 43 L70 37 L70 92 L30 92 L30 37 L19 43 L10 27 Z"/></svg>
+            Slika izdelka 1
+          </div>
+          <div class="ph"><span class="tag">Na modelu</span>
+            <svg viewBox="0 0 100 100" fill="#c9c3b6" aria-hidden="true"><path d="M33 12 L42 8 Q50 16 58 8 L67 12 L90 27 L81 43 L70 37 L70 92 L30 92 L30 37 L19 43 L10 27 Z"/></svg>
+            Slika izdelka 2
+          </div>
+          <div class="ph"><span class="tag">Ovratnik</span>
+            <svg viewBox="0 0 100 100" fill="#c9c3b6" aria-hidden="true"><path d="M33 12 L42 8 Q50 16 58 8 L67 12 L90 27 L81 43 L70 37 L70 92 L30 92 L30 37 L19 43 L10 27 Z"/></svg>
+            Slika izdelka 3
+          </div>
+        </div>
+        <p class="swipe-hint">← Povleci za več slik →</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Benefits -->
+  <section>
+    <div class="wrap">
+      <h2>Zakaj je Perfect Fit drugačna</h2>
+      <p class="section-lead">Majica, ki je ne boš nosil samo doma.</p>
+      <div class="benefits">
+        <div class="benefit">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div><h3>Ne skrči se</h3><p>Predhodno skrčen bombaž ohrani velikost tudi po 50 pranjih.</p></div>
+        </div>
+        <div class="benefit">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div><h3>Ovratnik drži obliko</h3><p>Ojačan rebrast ovratnik se ne raztegne in ne zvija.</p></div>
+        </div>
+        <div class="benefit">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div><h3>Ostane v hlačah</h3><p>4 cm daljši kroj, da majica ne leze ven, ko se skloniš ali dvigneš roke.</p></div>
+        </div>
+        <div class="benefit">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div><h3>Kroj za moško postavo</h3><p>Širša v ramenih, ožja v pasu. Poudari postavo, a ne stiska.</p></div>
+        </div>
+        <div class="benefit">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div><h3>Diha ves dan</h3><p>95 % česanega bombaža in 5 % elastana. Mehka, zračna in prijetno raztegljiva.</p></div>
+        </div>
+        <div class="benefit">
+          <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+          <div><h3>Nič ne praska</h3><p>Natisnjena etiketa namesto všite, zato te nič ne draži za vratom.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Customer reviews (sample content for the mockup) -->
+  <section class="reviews-bg">
+    <div class="wrap">
+      <h2>Kaj pravijo kupci</h2>
+      <div class="score">
+        <div class="big">4,8</div>
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <small>Na podlagi 2.347 ocen</small>
+      </div>
+      <div class="reviews">
+        <div class="review">
+          <div class="head"><div class="who"><span class="avatar">MK</span><div>Marko K.<span class="city">Ljubljana</span></div></div><span class="stars" aria-label="5 od 5">★★★★★</span></div>
+          <p>Končno majica, ki se po pranju ne skrči. Nosim jih že dva meseca in so še vedno kot nove. Takoj sem naročil še tri.</p>
+          <span class="verified">✓ Preverjen nakup</span>
+        </div>
+        <div class="review">
+          <div class="head"><div class="who"><span class="avatar">AP</span><div>Andrej P.<span class="city">Maribor</span></div></div><span class="stars" aria-label="5 od 5">★★★★★</span></div>
+          <p>Visok sem 192 cm in vse majice so mi prekratke. Ta ostane v hlačah, tudi ko dvignem roke. Odlično.</p>
+          <span class="verified">✓ Preverjen nakup</span>
+        </div>
+        <div class="review">
+          <div class="head"><div class="who"><span class="avatar">LH</span><div>Luka H.<span class="city">Celje</span></div></div><span class="stars" aria-label="5 od 5">★★★★★</span></div>
+          <p>Ovratnik ostane lep tudi po mnogih pranjih. Vzel sem paket šestih in imam majice za cel teden.</p>
+          <span class="verified">✓ Preverjen nakup</span>
+        </div>
+        <div class="review">
+          <div class="head"><div class="who"><span class="avatar">TR</span><div>Tomaž R.<span class="city">Koper</span></div></div><span class="stars" aria-label="5 od 5">★★★★★</span></div>
+          <p>Lepo se prilega v ramenih, čez trebuh pa ni preozka. Žena pravi, da v njej izgledam bolje kot v ostalih majicah.</p>
+          <span class="verified">✓ Preverjen nakup</span>
+        </div>
+        <div class="review">
+          <div class="head"><div class="who"><span class="avatar">JM</span><div>Jure M.<span class="city">Kranj</span></div></div><span class="stars" aria-label="4 od 5">★★★★☆</span></div>
+          <p>Dostava v dveh dneh, kakovost odlična. Bela je le malo prosojna, zato priporočam črno ali sivo.</p>
+          <span class="verified">✓ Preverjen nakup</span>
+        </div>
+        <div class="review">
+          <div class="head"><div class="who"><span class="avatar">GB</span><div>Gregor B.<span class="city">Novo mesto</span></div></div><span class="stars" aria-label="5 od 5">★★★★★</span></div>
+          <p>Velikost sem zamenjal brez težav in hitro. Zdaj se mi majica prilega popolno.</p>
+          <span class="verified">✓ Preverjen nakup</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 30-day risk-free guarantee -->
+  <section>
+    <div class="wrap">
+      <div class="guarantee">
+        <div class="seal"><div><strong>30</strong><span>dni brez<br>tveganja</span></div></div>
+        <h2>Preizkusi jo 30 dni. Brez tveganja.</h2>
+        <p>Nosi jo v službi, na treningu in jo peri, kolikor želiš. Če nisi navdušen, nam jo vrni in vrnemo ti celotno kupnino. Brez vprašanj.</p>
+        <ul>
+          <li>Celotno vračilo kupnine</li>
+          <li>Brezplačna menjava velikosti</li>
+          <li>Vračilo denarja v 14 dneh</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. FAQ -->
+  <section>
+    <div class="wrap">
+      <h2>Pogosta vprašanja</h2>
+      <p class="section-lead">Ne najdeš odgovora? Piši nam na pomoc@perfectfit.example.</p>
+      <div class="faq">
+        <details>
+          <summary>Katero velikost naj izberem?</summary>
+          <p>Izberi svojo običajno velikost. Majica se lepo prilega telesu, a ni ozka. Če si med dvema velikostma, izberi večjo. Velikost lahko kadarkoli brezplačno zamenjaš.</p>
+        </details>
+        <details>
+          <summary>Ali se majica po pranju skrči?</summary>
+          <p>Ne. Bombaž je predhodno skrčen, zato majica ohrani svojo velikost. Priporočamo pranje na 30 °C in sušenje na zraku.</p>
+        </details>
+        <details>
+          <summary>Ali lahko v paketu izberem različne barve in velikosti?</summary>
+          <p>Seveda. Pri paketu s 3 ali 6 majicami lahko v košarici za vsako majico izbereš drugo barvo in velikost.</p>
+        </details>
+        <details>
+          <summary>Kako poteka vračilo?</summary>
+          <p>Piši nam v 30 dneh od prejema paketa. Poslali ti bomo navodila za vračilo, kupnino pa ti vrnemo v 14 dneh po prejemu majic.</p>
+        </details>
+        <details>
+          <summary>Koliko časa traja dostava?</summary>
+          <p>Naročila odpošljemo v 24 urah. Dostava po Sloveniji traja 1–3 delovne dni.</p>
+        </details>
+        <details>
+          <summary>Ali lahko plačam po povzetju?</summary>
+          <p>Da. Plačaš lahko s kartico, prek PayPala ali po povzetju ob prevzemu.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Bundles 1x / 3x / 6x -->
+  <section class="buy" id="paketi">
+    <div class="wrap buy-box">
+      <h2>Izberi svoj paket</h2>
+      <p class="section-lead">Več majic, nižja cena na kos.</p>
+
+      <p class="opt-label">Barva: <span id="color-name">Črna</span></p>
+      <div class="swatches">
+        <input class="visually-hidden" type="radio" name="color" id="c-black" value="Črna" checked>
+        <label class="swatch" for="c-black" title="Črna" style="background:#1b1b1b"></label>
+        <input class="visually-hidden" type="radio" name="color" id="c-white" value="Bela">
+        <label class="swatch" for="c-white" title="Bela" style="background:#f7f7f4"></label>
+        <input class="visually-hidden" type="radio" name="color" id="c-grey" value="Siva">
+        <label class="swatch" for="c-grey" title="Siva" style="background:#8a8d91"></label>
+        <input class="visually-hidden" type="radio" name="color" id="c-navy" value="Mornarsko modra">
+        <label class="swatch" for="c-navy" title="Mornarsko modra" style="background:#1d3557"></label>
+      </div>
+
+      <p class="opt-label">Velikost</p>
+      <div class="sizes">
+        <input class="visually-hidden" type="radio" name="size" id="s-s" value="S"><label class="size" for="s-s">S</label>
+        <input class="visually-hidden" type="radio" name="size" id="s-m" value="M"><label class="size" for="s-m">M</label>
+        <input class="visually-hidden" type="radio" name="size" id="s-l" value="L" checked><label class="size" for="s-l">L</label>
+        <input class="visually-hidden" type="radio" name="size" id="s-xl" value="XL"><label class="size" for="s-xl">XL</label>
+        <input class="visually-hidden" type="radio" name="size" id="s-xxl" value="XXL"><label class="size" for="s-xxl">XXL</label>
+      </div>
+
+      <p class="opt-label">Paket</p>
+      <div class="bundles">
+        <div>
+          <input class="visually-hidden" type="radio" name="bundle" id="b1" value="24,90" data-note="+ dostava 3,90 €">
+          <label class="bundle" for="b1">
+            <span class="radio"></span>
+            <span class="qty">1× majica<small>24,90 € / kos</small></span>
+            <span class="price">24,90 €</span>
+          </label>
+        </div>
+        <div>
+          <input class="visually-hidden" type="radio" name="bundle" id="b3" value="59,90" data-note="Prihraniš 14,80 € · Brezplačna dostava" checked>
+          <label class="bundle" for="b3">
+            <span class="badge">Najbolj priljubljeno</span>
+            <span class="radio"></span>
+            <span class="qty">3× majice<small>19,97 € / kos</small></span>
+            <span class="price"><s>74,70 €</s>59,90 €<br><span class="save">Prihraniš 14,80 €</span></span>
+          </label>
+        </div>
+        <div>
+          <input class="visually-hidden" type="radio" name="bundle" id="b6" value="99,90" data-note="Prihraniš 49,50 € · Brezplačna dostava">
+          <label class="bundle" for="b6">
+            <span class="badge dark">Najboljša vrednost</span>
+            <span class="radio"></span>
+            <span class="qty">6× majic<small>16,65 € / kos</small></span>
+            <span class="price"><s>149,40 €</s>99,90 €<br><span class="save">Prihraniš 49,50 €</span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="checkout">
+        <button class="btn" type="button" id="cta">Dodaj v košarico · 59,90 €</button>
+        <p class="checkout-note" id="cta-note">Prihraniš 14,80 € · Brezplačna dostava</p>
+        <div class="trust">
+          <span>30 dni za vračilo</span>
+          <span>Plačilo po povzetju</span>
+          <span>Odpošljemo v 24 urah</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Perfect Fit · Vse pravice pridržane</footer>
+
+<div class="sticky">
+  <div class="info"><strong>Perfect Fit majica</strong>že od 16,65 € / kos</div>
+  <a href="#paketi" class="btn">Izberi paket</a>
+</div>
+
+<script>
+  // Update the CTA price and colour label when the selection changes.
+  const cta = document.getElementById('cta');
+  const note = document.getElementById('cta-note');
+  document.querySelectorAll('input[name="bundle"]').forEach(input => {
+    input.addEventListener('change', () => {
+      cta.textContent = 'Dodaj v košarico · ' + input.value + ' €';
+      note.textContent = input.dataset.note;
+    });
+  });
+  document.querySelectorAll('input[name="color"]').forEach(input => {
+    input.addEventListener('change', () => {
+      document.getElementById('color-name').textContent = input.value;
+    });
+  });
+</script>
+</body>
+</html>

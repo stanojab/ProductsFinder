@@ -1,0 +1,4 @@
+# Demo mode needs only the Python standard library.
+# These are for the live Meta Ad Library mode (not implemented yet):
+requests>=2.31
+python-dotenv>=1.0
