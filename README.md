@@ -114,4 +114,4 @@ In production the plan is **PostgreSQL**, so that several runs and users can sha
 - Implement the live `ads_archive` client, with rate-limit backoff and the cache wired in.
 - Move the cache from SQLite to PostgreSQL for production.
 - Reviews score, e.g. Trustpilot or on-site review counts.
-- Traffic score, e.g. a Similarweb estimate for the landing domain.
+- Traffic score, e.g. a GoogleTrends estimate for the landing domain.
