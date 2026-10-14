@@ -14,10 +14,6 @@ It collects active ads from the Meta Ad Library, groups them into products, scor
 
 ![Landing page hero](docs/screenshots/landing-hero.png)
 
-<details>
-<summary><b>Show full page screenshots (desktop and mobile)</b></summary>
-<br>
-
 <table>
   <tr>
     <th>Desktop (1280px)</th>
@@ -28,8 +24,6 @@ It collects active ads from the Meta Ad Library, groups them into products, scor
     <td valign="top"><img src="docs/screenshots/landing-mobile.png" alt="Full landing page on mobile" width="240"></td>
   </tr>
 </table>
-
-</details>
 
 The product images, reviews, rating count and support email are placeholders.
 
